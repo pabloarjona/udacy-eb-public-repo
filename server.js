@@ -2,13 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
 
+console.log("Starting server...");
 
 
   // Init the Express application
   const app = express();
 
   // Set the network port
-  const port = process.env.PORT || 8082;
+  const port = process.env.PORT || 8080;
   
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
@@ -30,12 +31,15 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
     /**************************************************************************** */
 
   //! END @TODO1
-  
+  console.log("Server running...2");
   // Root Endpoint
   // Displays a simple message to the user
- // app.get( "/", async (req, res) => {
- //   res.send("try GET /filteredimage?image_url={{}}")
- // } );
+  app.get("/health", (req, res) => res.send("OK"));
+  app.get( "/", (req, res) => {
+    const port = process.env.PORT || 8080;
+    console.log(`Server running on port ${port}`);
+    res.send("try GET /filteredimage?image_url={{}}")
+  } );
   
   app.get('/filteredimage', async (req, res) => {
     const { image_url: imageUrl } = req.query;
